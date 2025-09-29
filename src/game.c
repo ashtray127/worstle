@@ -75,7 +75,7 @@ void run_line(struct Words *possible_words, struct GameState state, char *soluti
     if (is_null(&state)) {
         return;
     }
-    if (is_all_green(&state, i)) {
+    if (is_all_green(answer, solution)) {
         finish_line(&state, i+1, solution);
         return;
     }

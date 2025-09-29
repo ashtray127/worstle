@@ -61,12 +61,9 @@ bool is_marked_green(struct GameState *state, int col)
 void mark_green(struct GameState *state, int col)
 {  SET_TRUE_MASK(state->disallowed_letters_mask[STATE_GREEN_LOC], (STATE_GREEN_START_BIT+col)); }
 
-bool is_all_green(struct GameState *state, int i)
+bool is_all_green(char *answer, char *solution)
 {
-    for (int j = 0; j < WORD_LEN; j++)
-        if (state->current_result_buf[i][j] != GREEN)
-            return false;
-    return true;
+    return memcmp(answer, solution, WORD_LEN) == 0;
 }
 
 
@@ -95,6 +92,8 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
     if (is_null(state))
         return;
 
+    uint8_t taken_mask = 0;
+
     for (int j = 0; j < WORD_LEN; j++) {
         // check for disallowed letters in column
         if (CHECK_MASK(state->disallowed_letters_mask[j], CHAR_TO_INDEX(answer[j]))) {
@@ -107,13 +106,15 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
                 make_null(state, i);
                 return;
             }
+            SET_TRUE_MASK(taken_mask, j);
         }
 
         else if (is_marked_yellow(state, j)) {
             bool contains_yellow = false;
 
             for (int k = 0; k < WORD_LEN; k++) {
-                if (answer[k] == solution[j]) {
+                if (answer[k] == solution[j] && !CHECK_MASK(taken_mask, k)) {
+                    SET_TRUE_MASK(taken_mask, k);
                     contains_yellow = true;
                     break;
                 }
@@ -127,7 +128,7 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
     }
 
     // the characters in solution that are taken by another character
-    uint8_t taken_mask = 0;
+    taken_mask = 0;
 
     // update result buf
     for (int j = 0; j < WORD_LEN; j++) {

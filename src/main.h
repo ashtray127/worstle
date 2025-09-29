@@ -82,7 +82,7 @@ bool is_marked_yellow(struct GameState *state, int col);
 void mark_yellow(struct GameState *state, int col);
 bool is_marked_green(struct GameState *state, int col);
 void mark_green(struct GameState *state, int col);
-bool is_all_green(struct GameState *state, int i);
+bool is_all_green(char *answer, char *solution);
 void print_answer(struct GameState *state, char *answer, int i);
 void get_results(char *solution, char *answer, struct GameState *state, int i);
 
