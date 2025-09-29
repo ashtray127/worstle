@@ -48,7 +48,7 @@ void finish_line(struct GameState *state, int i, char *solution)
         best.best_state_i = i;
     }
 
-    if (states_finished % 1000 != 0) {
+    if (states_finished % 100 != 0) {
         return;
     }
 

@@ -130,7 +130,12 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
     // the characters in solution that are taken by another character
     taken_mask = 0;
 
+
     // update result buf
+
+    for (int j = 0; j < WORD_LEN; j++)
+        state->current_result_buf[i][j] = GRAY;
+
     for (int j = 0; j < WORD_LEN; j++) {
 
         // green
@@ -146,14 +151,14 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
 
                 SET_TRUE_MASK(state->disallowed_letters_mask[j], k);
             }
-            continue;
         }
+    }
+
+    for (int j = 0; j < WORD_LEN; j++) {
 
         // yellow
-        bool pass = false;
         for (int k = 0; k < WORD_LEN; k++) {
             if (answer[j] == solution[k] && !CHECK_MASK(taken_mask, k)) { // solution contains letter
-                pass = true;
                 state->current_result_buf[i][j] = YELLOW;
                 mark_yellow(state, k);
 
@@ -162,16 +167,17 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
                 break;
             }
         }
-        if (pass)
-            continue;
-
-        // gray
-        state->current_result_buf[i][j] = GRAY;
-        for (int k = 0; k < WORD_LEN; k++) {
-            SET_TRUE_MASK(state->disallowed_letters_mask[k], CHAR_TO_INDEX(answer[j]));
-        }
-
     }
+
+    for (int j = 0; j < WORD_LEN; j++) {
+        if (state->current_result_buf[i][j] == GRAY) {
+            for (int k = 0; k < WORD_LEN; k++) {
+                SET_TRUE_MASK(state->disallowed_letters_mask[k], CHAR_TO_INDEX(answer[j]));
+            }
+        }
+    }
+
+
 
 }
 
