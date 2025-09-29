@@ -59,6 +59,12 @@ struct GameState {
     char answers[WORDS_IN_GAME][WORD_LEN];
 };
 
+struct BestState {
+    int best_score;
+    int best_state_i;
+    struct GameState best_state;
+};
+
 struct GameState create_blank_state();
 
 // files.c -------------------
@@ -83,3 +89,5 @@ void get_results(char *solution, char *answer, struct GameState *state, int i);
 // game.c -----------------------
 void finish_line(struct GameState *state, int i, char *solution);
 void run_line(struct Words *possible_words, struct GameState state, char *solution, int i, char *answer);
+void run_all_lines(struct Words *possible_words, struct GameState state, char *solution, int i);
+void set_best();

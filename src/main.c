@@ -3,15 +3,15 @@
 
 int main()
 {
+    set_best();
     struct Words possible_answers = get_words_from_file(POSSIBLE_ANSWERS_PATH);
     // struct Words possible_answers = get_words_from_file("./data/test.txt");
-    char *solution = "aahed";
+    char *solution = "gooey";
 
     struct GameState initial_state = create_blank_state();
 
-    for (int i = 0; i < possible_answers.num_words; i++) {
-        printf("%i\n", i);
-        run_line(&possible_answers, initial_state, solution, 0, possible_answers.words[i]);
+    for (int j = 0; j < possible_answers.num_words; j++) {
+        run_line(&possible_answers, initial_state, solution, 0, possible_answers.words[j]);
     }
 
 
