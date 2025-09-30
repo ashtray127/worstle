@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdint.h>
+#include <pthread.h>
+#include <unistd.h>
 
 #define POSSIBLE_ANSWERS_PATH "./data/answers.txt"
 #define POSSIBLE_SOLUTIONS_PATH "./data/solutions.txt"
@@ -44,6 +46,11 @@
 #define GRAY_TEXT "\x1B[2m"
 #define RED_TEXT "\x1B[31m"
 #define DEFAULT_TEXT "\x1B[39m\x1B[22m"
+
+// THREADING ---
+
+#define NUM_CORES 4
+#define NUM_THREADS (NUM_CORES*2)
 
 
 
@@ -90,4 +97,9 @@ void get_results(char *solution, char *answer, struct GameState *state, int i);
 void finish_line(struct GameState *state, int i, char *solution);
 void run_line(struct Words *possible_words, struct GameState state, char *solution, int i, char *answer);
 void run_all_lines(struct Words *possible_words, struct GameState state, char *solution, int i);
+int get_score(struct GameState *state, int i);
 void set_best();
+
+
+// threads.c --------------------
+void run_threads(struct Words *possible_answers, struct GameState initial_state, char *solution);

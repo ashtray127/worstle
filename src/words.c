@@ -127,11 +127,9 @@ void get_results(char *solution, char *answer, struct GameState *state, int i)
         }        
     }
 
-    // the characters in solution that are taken by another character
-    taken_mask = 0;
-
-
+    
     // update result buf
+    taken_mask = 0;
 
     for (int j = 0; j < WORD_LEN; j++)
         state->current_result_buf[i][j] = GRAY;

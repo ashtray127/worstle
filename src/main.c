@@ -10,9 +10,11 @@ int main()
 
     struct GameState initial_state = create_blank_state();
 
-    for (int j = 0; j < possible_answers.num_words; j++) {
-        run_line(&possible_answers, initial_state, solution, 0, possible_answers.words[j]);
-    }
+    // for (int j = 0; j < possible_answers.num_words; j++) {
+    //     run_line(&possible_answers, initial_state, solution, 0, possible_answers.words[j]);
+    // }
+
+    run_threads(&possible_answers, initial_state, solution);
 
 
     cleanup_word_file(&possible_answers);

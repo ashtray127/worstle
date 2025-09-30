@@ -71,7 +71,6 @@ void run_line(struct Words *possible_words, struct GameState state, char *soluti
     get_results(solution, state.answers[i], &state, i);
 
 
-
     if (is_null(&state)) {
         return;
     }
